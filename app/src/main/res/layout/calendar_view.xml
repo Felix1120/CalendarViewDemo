@@ -18,7 +18,7 @@
             android:id="@+id/tv_year_calendar_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2020"
+            android:textColor="@color/day_color"
             android:textSize="18dp" />
 
         <TextView
@@ -49,7 +49,7 @@
         <com.yuan.calendar.custom.CalendarView
             android:id="@+id/cv_calendar_view"
             android:layout_width="match_parent"
-            android:layout_height="350dp">
+            android:layout_height="wrap_content">
         </com.yuan.calendar.custom.CalendarView>
     </FrameLayout>
 

@@ -77,13 +77,13 @@ public class CalendarUtils {
         List<DayBean> dayBeans = new ArrayList<>();
         int firstIndex = getMonthFirstDateAtWeek(year, month, isSundayFirst);
         for (int index = 0; index < firstIndex; index++) {
-            dayBeans.add(new DayBean(true));
+            dayBeans.add(new DayBean());
         }
         for (int index = 0; index < getMonthDays(year, month); index++) {
             dayBeans.add(addDay(year, month, index + 1));
         }
         for (int index = 0; index < CalendarUtils.DAY_CELL - getMonthDays(year, month) - firstIndex; index++) {
-            dayBeans.add(new DayBean(true));
+            dayBeans.add(new DayBean());
         }
         // 缓存年月的天数
         cacheDays.put(getKey(year, month), dayBeans);
@@ -133,7 +133,7 @@ public class CalendarUtils {
      * @return
      */
     private DayBean addDay(int year, int month, int day) {
-        DayBean dayBean = new DayBean(false);
+        DayBean dayBean = new DayBean();
         dayBean.setYear(year);
         dayBean.setMonth(month);
         dayBean.setDay(day);

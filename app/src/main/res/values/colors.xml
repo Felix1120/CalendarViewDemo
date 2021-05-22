@@ -5,9 +5,10 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="day_color">#FF555555</color>
-    <color name="week_color">#FF888888</color>
+    <color name="day_color">#FF888888</color>
+    <color name="week_color">#FFaaaaaa</color>
     <color name="white">#FFFFFFFF</color>
     <color name="color_e">#eeeeee</color>
     <color name="color_a">#aaaaaa</color>
+    <color name="color_ff9405">#ff9405</color>
 </resources>

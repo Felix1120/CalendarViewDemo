@@ -16,12 +16,7 @@ public class DayBean implements Serializable {
     private int year;
     private int month;
     private int day = 0;
-    private boolean isEmpty = false;
     private boolean isSelected = false;
-
-    public DayBean(boolean isEmpty) {
-        this.isEmpty = isEmpty;
-    }
 
     public RectF getRectF() {
         return rectF;
@@ -53,10 +48,6 @@ public class DayBean implements Serializable {
 
     public void setDay(int day) {
         this.day = day;
-    }
-
-    public boolean isEmpty() {
-        return isEmpty;
     }
 
     public boolean isSelected() {

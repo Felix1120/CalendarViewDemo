@@ -1,5 +1,6 @@
 package com.yuan.calendar.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MonthHolder>
 
     private List<DateBean> list;
     private OnClickListener listener;
+    private Context context;
 
     public MonthAdapter(List<DateBean> list) {
         this.list = list;
@@ -47,6 +49,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MonthHolder>
     @NonNull
     @Override
     public MonthHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.month_adapter_item, parent, false);
         return new MonthHolder(view);
     }
@@ -54,9 +57,14 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.MonthHolder>
     @Override
     public void onBindViewHolder(@NonNull MonthHolder holder, int position) {
         holder.tvMonth.setText(String.valueOf(list.get(position).getMonth()).concat("月"));
+        if (list.get(position).isSelected()) {
+            holder.tvMonth.setTextColor(context.getResources().getColor(R.color.color_ff9405));
+        } else {
+            holder.tvMonth.setTextColor(context.getResources().getColor(R.color.day_color));
+        }
         if (listener != null) {
             holder.tvMonth.setOnClickListener((view)->{
-                listener.clickItem(list.get(position).getYear(), list.get(position).getMonth());
+                listener.clickItem(position, list.get(position).getYear(), list.get(position).getMonth());
             });
         }
     }

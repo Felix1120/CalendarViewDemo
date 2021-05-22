@@ -39,6 +39,7 @@ public class Calendar extends LinearLayout {
 
     private MonthAdapter adapter;
     private DateItemClickListener listener;
+    private List<DateBean> beanList;
 
     public Calendar(Context context) {
         super(context);
@@ -47,7 +48,7 @@ public class Calendar extends LinearLayout {
     public Calendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(getContext()).inflate(R.layout.calendar_view, this);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs,R.styleable.Calendar);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.Calendar);
         initWidget(typedArray);
     }
 
@@ -64,36 +65,64 @@ public class Calendar extends LinearLayout {
         initRecyclerView();
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(RecyclerView.HORIZONTAL);
         recyclerView.setLayoutManager(manager);
         adapter = new MonthAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnClickListener((year, month)->{
+        adapter.setOnClickListener((index, year, month) -> {
             tvYear.setText(String.valueOf(year));
+            // 加载日历
             calendarView.setDate(year, month, false);
+            // 刷新月份颜色
+            updateList(index, beanList);
         });
     }
 
+    /**
+     * 获取开始到结束时间的集合
+     *
+     * @return
+     */
     private List<DateBean> getDateList() {
         List<DateBean> dateBeans = new ArrayList<>();
         // 开始年份到12月
-        for (int month = startMonth; month <= 12; month ++) {
-            dateBeans.add(new DateBean(startYear, month));
+        for (int month = startMonth; month <= 12; month++) {
+            dateBeans.add(new DateBean(startYear, month, false));
         }
         // 开始到结束年份之间的月份
         for (int year = startYear + 1; year <= endYear - 1; year++) {
-            for (int month = 1; month <= 12; month ++) {
-                dateBeans.add(new DateBean(year, month));
+            for (int month = 1; month <= 12; month++) {
+                dateBeans.add(new DateBean(year, month, false));
             }
         }
         // 最后一年的月份
-        for (int month = 1; month <= endMonth; month ++) {
-            dateBeans.add(new DateBean(endYear, month));
+        for (int month = 1; month <= endMonth; month++) {
+            dateBeans.add(new DateBean(endYear, month, false));
         }
         return dateBeans;
+    }
+
+    /**
+     * 修改选中月份的颜色标志位
+     *
+     * @param position
+     * @param beanList
+     */
+    private void updateList(int position, List<DateBean> beanList) {
+        if (beanList == null) {
+            return;
+        }
+        for (int index = 0; index < beanList.size(); index++) {
+            if (position == index) {
+                beanList.get(index).setSelected(true);
+            } else {
+                beanList.get(index).setSelected(false);
+            }
+        }
+        adapter.updateList(beanList);
     }
 
 
@@ -140,14 +169,15 @@ public class Calendar extends LinearLayout {
         this.startMonth = startMonth;
         this.endYear = endYear;
         this.endMonth = endMonth;
-        adapter.updateList(getDateList());
+        beanList = getDateList();
+        adapter.updateList(beanList);
         tvYear.setText(String.valueOf(startYear));
     }
 
     /**
      * 设置选中回调
      */
-    public void setItemClickListener(DateItemClickListener listener){
+    public void setItemClickListener(DateItemClickListener listener) {
         if (calendarView != null) {
             calendarView.setItemClickListener(listener);
         }

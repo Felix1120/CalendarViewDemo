@@ -5,5 +5,5 @@ package com.yuan.calendar.callback;
  * @date :2021/5/22
  */
 public interface OnClickListener {
-    void clickItem(int year, int month);
+    void clickItem(int index, int year, int month);
 }

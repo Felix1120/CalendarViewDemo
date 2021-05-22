@@ -7,10 +7,12 @@ package com.yuan.calendar.bean;
 public class DateBean {
     private int year;
     private int month;
+    private boolean isSelected;
 
-    public DateBean(int year, int month) {
+    public DateBean(int year, int month , boolean isSelected) {
         this.year = year;
         this.month = month;
+        this.isSelected = isSelected;
     }
 
     public int getYear() {
@@ -27,5 +29,13 @@ public class DateBean {
 
     public void setMonth(int month) {
         this.month = month;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }
